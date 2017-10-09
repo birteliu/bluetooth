@@ -114,6 +114,10 @@ a {
     text-decoration: none;
 }
 
+.top-btn a:visited {
+    color: #ffffff;
+}
+
 .content {
     min-height: 100vh;
 }
