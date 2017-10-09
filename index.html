@@ -1,244 +1,144 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
- <script src="https://webduino.io/components/webduino-js/dist/webduino-base.js"></script>
- <!-- <script src="http://webduinoio.github.io/webduino-bluetooth-transport/src/CordovaBluetoothTransport.js"></script> -->
-   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/farm.css" />
+    <script src="https://webduino.io/components/webduino-js/dist/webduino-base.js"></script>
+    <!-- <script src="http://webduinoio.github.io/webduino-bluetooth-transport/src/CordovaBluetoothTransport.js"></script> -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="js/bluetoothCoreFunc.js"></script>
 </head>
 
 <body>
+    <div class="container-fluid">
+        <div class="top">
+            <div class="top-pic" style="background-image:url('img/bg.jpg')">
+                <div class="container col-md-8 col-md-offset-2 top-center">
+                    <img src="img/circle.png" alt="" class="img-responsive top-circle">
+                    <div class="top-text">農委會 - 機械搬運手臂</div>
+                    <div class="top-btn"><a href="#go-content">Let’s Go</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="content row" id="go-content">
+            <div class="col-xs-12">
+                <div id="txt_btconnect_status" class="green-text">Bluetooth Connect Status: Unconnect</div>
+            </div>
+            <div class="col-xs-8">
+                <input type="text" id="input_btaddr_value" value="98:D3:32:20:EA:44" class="input-text">
+            </div>
+            <div class="col-xs-4">
+                <button type="button" id="btn_set_btaddr" class="input-btn">Connect</button>
+            </div>
+            <div class="col-xs-8">
+                <div id="txt_sensor_status" class="input-text green-color">Sensor Status: Stop</div>
+            </div>
+            <div class="col-xs-4">
+                <button type="button" id="btn_sensorstatus_switch" class="input-btn">Switch</button>
+            </div>
+            <div class="col-xs-12">
+                <div class="green-text">Threshold & Duration</div>
+                <input type="text" id="input_set_value" class="input-text-all">
+            </div>
+            <div class="col-xs-3" style="padding-right: 0px;">
+                <button type="button" id="btn_set_threshold" class="four-btn">Set T</button>
+            </div>
+            <div class="col-xs-3" style="padding-left: 7.5px; padding-right: 3.5px;">
+                <button type="button" id="btn_get_threshold" class="four-btn">Get T</button>
+            </div>
+            <div class="col-xs-3" style="padding-left: 3.5px; padding-right: 7.5px;">
+                <button type="button" id="btn_set_duration" class="four-btn">Set D</button>
+            </div>
+            <div class="col-xs-3" style="padding-left: 0;">
+                <button type="button" id="btn_get_duration" class="four-btn">Get D</button>
+            </div>
+            <div class="col-xs-12">
+              <div class="input-text-all">
+                <div id="txt_threshold">Current Threshold: 0</div>
+                <div id="txt_cnt">Current Threshold Cnt: 0</div>
+                <div id="txt_duration">Current Duration: 0</div>
+              </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="green-text">Chart</div>
+                <div class="input-text-all">
+                  <div id="chart_div"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <div id="txt_status">Sensor status: stop</div>
-  <div id="txt_threshold">Current Threshold: 0</div>
-  <div id="txt_cnt">Current Threshold Cnt: 0</div>
-  <div id="txt_duration">Current  Duration: 0</div>
-  <form>
-   <input type="text" id="input_set_value">
-  </form>
-  <form>
-    <button type="button" id="btn_sensorstatus_switch">Sensor Status Switch</button>
-  </form>
-  <form>
-    <button type="button" id="btn_set_threshold">Set Threshold</button>
-    <button type="button" id="btn_get_threshold">Get Threshold</button>
-  </form>
-  <form>
-    <button type="button" id="btn_set_duration">Set Duration</button>
-    <button type="button" id="btn_get_duration">Get Duration</button>
-  </form>
-  <div id="chart_div"></div>
+    <!-- <form>
+        <div id="txt_btconnect_status">Bluetooth Connect Status: Unconnect</div>
+    </form>
+    <form>
+        <input type="text" id="input_btaddr_value" value="98:D3:32:20:EA:44">
+        <button type="button" id="btn_set_btaddr">Set Bluetooth Address</button>
+    </form>
+    <form>
+        <div id="txt_sensor_status">Sensor Status: Stop</div>
+        <div id="txt_threshold">Current Threshold: 0</div>
+        <div id="txt_cnt">Current Threshold Cnt: 0</div>
+        <div id="txt_duration">Current Duration: 0</div>
+    </form>
+    <form>
+        <button type="button" id="btn_sensorstatus_switch">Sensor Status Switch</button>
+    </form>
+    <form>
+        <input type="text" id="input_set_value">
+    </form>
+    <form>
+        <button type="button" id="btn_set_threshold">Set Threshold</button>
+        <button type="button" id="btn_get_threshold">Get Threshold</button>
+    </form>
+    <form>
+        <button type="button" id="btn_set_duration">Set Duration</button>
+        <button type="button" id="btn_get_duration">Get Duration</button>
+    </form>
+    <div id="chart_div"></div> -->
+    <script>
+    //================================================================================================================================
+    var txtBtconnectStatus = document.getElementById("txt_btconnect_status");
+    var txtSensorStatus = document.getElementById("txt_sensor_status");
+    var txtCnt = document.getElementById("txt_cnt");
+    var txtThreshold = document.getElementById("txt_threshold");
+    var txtDuration = document.getElementById("txt_duration");
 
- <script>
- //================================================================================================================================
-  var txtStatus = document.getElementById("txt_status");
-  var txtCnt = document.getElementById("txt_cnt");
-  var txtThreshold = document.getElementById("txt_threshold");
-  var txtDuration = document.getElementById("txt_duration");
-  var inputSetValue = document.getElementById("input_set_value");
-  var btnSensorstatusSwitch = document.getElementById("btn_sensorstatus_switch");
-  var btnSetThreshold = document.getElementById("btn_set_threshold");
-  var btnGetThreshold = document.getElementById("btn_get_threshold");
-  var btnSetDuration = document.getElementById("btn_set_duration");
-  var btnGetDuration = document.getElementById("btn_get_duration");
-  //sensorStatus
-  var sensorStatus = false;
-  var vThreshold = 0;
-  var vDuration = 0;
-  //msg use
-  var writeToBuf = false;
-  var msgArr= [];
-  var strBuf ="";
-  //draw chart use
-  var dataBuf =[];
-  var showsize = 50; // control show data num
-  for(var i=0;i<showsize;i++) dataBuf.push([i,0]);
-  //================================================== init
+    var inputSetValue = document.getElementById("input_set_value");
+    var inputBTaddrValue = document.getElementById("input_btaddr_value");
+    var btnSensorstatusSwitch = document.getElementById("btn_sensorstatus_switch");
+    var btnSetThreshold = document.getElementById("btn_set_threshold");
+    var btnGetThreshold = document.getElementById("btn_get_threshold");
+    var btnSetDuration = document.getElementById("btn_set_duration");
+    var btnGetDuration = document.getElementById("btn_get_duration");
+    var btnSetBTaddr = document.getElementById("btn_set_btaddr");
 
-  var board = new webduino.Arduino({ transport: 'bluetooth', address: '98:D3:31:70:7A:22' }); //connect
+    //================================================== init
+    var board = new bluetoothConnect('');
+    //drawChartTrigger
+    setInterval(drawBackgroundColor, 50);
+    //================================================= btn event listen
+    //Bluetooth Address
+    btnSetBTaddr.addEventListener("click", newBTConnect);
+    //SensorStatus
+    btnSensorstatusSwitch.addEventListener("click", StatusSwitch);
+    //Threshold
+    btnGetThreshold.addEventListener("click", getThreshold);
+    btnSetThreshold.addEventListener("click", setThreshold);
+    //Duration
+    btnGetDuration.addEventListener("click", getDuration);
+    btnSetDuration.addEventListener("click", setDuration);
 
-  setInterval(drawBackgroundColor,50); //drawChartTrigger
+    //================================================== get msg
 
-  // setTimeout(function(){
-  //   board._transport.send(toUTF8Array("2*"));// get init threshold
-  //   board._transport.send(toUTF8Array("4*")); // get init duration
-  // },1100);
-
-  //================================================= btn event listen
-  //SensorStatus
-  btnSensorstatusSwitch.addEventListener("click", function(){
-
-    if(sensorStatus){
-
-      board._transport.send(toUTF8Array("1,0*"));
-    }
-    else{
-
-      board._transport.send(toUTF8Array("1,1*"));
-    }
-  });
-  //Threshold
-    btnGetThreshold.addEventListener("click", function(){
-
-      board._transport.send(toUTF8Array("2,"+inputSetValue.value+"*"));
-      txtThreshold.textContent = "Current Threshold: "+vThreshold;
-  });
-
-  btnSetThreshold.addEventListener("click", function(){
-
-    if(inputSetValue.value >=50 && inputSetValue.value <= 1023 ){
-      board._transport.send(toUTF8Array("3,"+inputSetValue.value+"*"));
-      return;
-    }
-    inputSetValue.value= "Error,the range [50 ~ 1023]";
-
-  });
-  //Duration
-   btnGetDuration.addEventListener("click", function(){
-
-      board._transport.send(toUTF8Array("4,"+inputSetValue.value+"*"));
-      txtDuration.textContent = "Current Duration: "+vDuration;
-  });
-
-  btnSetDuration.addEventListener("click", function(){
-
-    if(inputSetValue.value >=50 && inputSetValue.value <= 1000 ){
-      board._transport.send(toUTF8Array("5,"+inputSetValue.value+"*"));
-      return;
-    }
-    inputSetValue.value= "Error,the range [50 ~ 1000]";
-  });
-
-  //================================================== func_toUTF8Array
-
-  function toUTF8Array(str) {
-    var utf8 = [];
-    for (var i=0; i < str.length; i++) {
-        var charcode = str.charCodeAt(i);
-        if (charcode < 0x80) utf8.push(charcode);
-        else if (charcode < 0x800) {
-            utf8.push(0xc0 | (charcode >> 6),
-                      0x80 | (charcode & 0x3f));
-        }
-        else if (charcode < 0xd800 || charcode >= 0xe000) {
-            utf8.push(0xe0 | (charcode >> 12),
-                      0x80 | ((charcode>>6) & 0x3f),
-                      0x80 | (charcode & 0x3f));
-        }
-        // surrogate pair
-        else {
-            i++;
-            // UTF-16 encodes 0x10000-0x10FFFF by
-            // subtracting 0x10000 and splitting the
-            // 20 bits of 0x0-0xFFFFF into two halves
-            charcode = 0x10000 + (((charcode & 0x3ff)<<10)
-                      | (str.charCodeAt(i) & 0x3ff));
-            utf8.push(0xf0 | (charcode >>18),
-                      0x80 | ((charcode>>12) & 0x3f),
-                      0x80 | ((charcode>>6) & 0x3f),
-                      0x80 | (charcode & 0x3f));
-        }
-    }
-    return utf8;
-  }
-  //================================================== get msg
- 	board._transport.on('message', function (event) {
-  	for(var i=0; i < event.length;i++){
-		  var getChar = String.fromCharCode(event[i]);
-
-			if( getChar == '*'){
-				writeToBuf = !writeToBuf;
-   		}
-		  if(writeToBuf){
-   			strBuf += getChar;
-   		}
-   		else{
-			  var x = strBuf.split("*");
-        strBuf="";
-   		  var cmd  = x[1].substring(0,1);
-        var value = x[1].substring(1);
-        console.log(cmd +','+ value);  // 想看命令傳過來是什就開這個
-   			msgArr.push({'cmd':cmd,'value':value});
-   		 }
-    }
- 	});
-
-  //================================================== func_drawChart
-  //
-  google.charts.load('current', {packages: ['corechart', 'line']});
-
-  function drawBackgroundColor() {
-
-      if(msgArr.length == 0) return;
-
-      var data = new google.visualization.DataTable();
-
-      data.addColumn('number', 'X');
-      data.addColumn('number', 'G');
-
-      var msgObj = msgArr.shift();
-
-      if(msgObj !='undefined'){
-
-        if(msgObj.cmd=='G'){
-          var i;
-          for(i=0; i < dataBuf.length-1;i++){
-            dataBuf[i][1] = dataBuf[i+1][1];
-          }
-          dataBuf[i][1] = parseInt(msgObj.value);
-        }
-        else if(msgObj.cmd == 'm'){
-
-          if(msgObj.value ==0){ txtStatus.textContent = "Sensor status: Stop"; sensorStatus = false;}
-          else if(msgObj.value ==1){ txtStatus.textContent = "Sensor status: Start"; sensorStatus = true;}
-          return;
-        }
-        else if(msgObj.cmd == 'c'){
-
-          txtCnt.textContent  = 'Current Threshold Cnt: '+msgObj.value;
-          return;
-        }
-        else if(msgObj.cmd == 't'){
-
-          vThreshold = parseInt(msgObj.value);
-          txtThreshold.textContent = "Current Threshold: "+vThreshold;
-          return;
-        }
-        else if(msgObj.cmd == 'd'){
-
-          vDuration = parseInt(msgObj.value);
-          txtDuration.textContent = "Current Duration: "+vDuration;
-          return;
-        }
-        else{
-          console.log(msgObj.cmd);
-          console.log(msgObj.value);
-          return;
-        }
-      }
-
-      data.addRows(dataBuf);
-
-      var options = {
-        hAxis: {
-          title: 'Time'
-        },
-        vAxis: {
-          title: 'Popularity',
-          viewWindow:{
-            max:1023,
-            min:0
-          }
-        },
-        backgroundColor: '#ffffff'
-      };
-
-      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-
-    };
-
-//================================================================================================================================
- </script>
+    //================================================================================================================================
+    </script>
 </body>
 
 </html>
