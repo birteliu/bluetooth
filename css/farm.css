@@ -87,6 +87,15 @@ a {
     text-align: center;
 }
 
+.logo {
+    position: relative;
+    width: 10%;
+    top: 3%;
+    left: 3%;
+    margin: 0;
+    padding: 0;
+}
+
 .top-circle {
     width: 80%;
     margin: auto;
