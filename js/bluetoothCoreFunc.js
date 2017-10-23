@@ -18,7 +18,7 @@ function newBTConnect() { void 0 != board._transport && board._transport.close()
     setTimeout(setBTConnectStatus, 1E3);
     board._transport.on("message", function(d) { MsgAnalysis(d) }) }
 
-function setBTConnectStatus() { txtBtconnectStatus.textContent = board.isConnected ? "Bluetooth Connect Status: Connect" : "Bluetooth Connect Status: Unconnect" }
+function setBTConnectStatus() { txtBtconnectStatus.textContent = board.isConnected ? "手套狀態：已連結" : "手套狀態：未連結" }
 
 function StatusSwitch() { sensorStatus ? board._transport.send(toUTF8Array("1,0*")) : board._transport.send(toUTF8Array("1,1*")) }
 
@@ -41,8 +41,8 @@ function drawBackgroundColor() {
         if ("undefined" != a)
             if ("G" == a.cmd) { var c; for (c = 0; c < dataBuf.length - 1; c++) dataBuf[c][1] = dataBuf[c + 1][1];
                 dataBuf[c][1] = parseInt(a.value) } else {
-                "m" == a.cmd ? 0 == a.value ? (txtSensorStatus.textContent = "Sensor Status: Stop", sensorStatus = !1) : 1 == a.value && (txtSensorStatus.textContent = "Sensor Status: Start", sensorStatus = !0) : "c" == a.cmd ? txtCnt.textContent =
-                    "Current Threshold Cnt: " + a.value : "t" == a.cmd ? (vThreshold = parseInt(a.value), txtThreshold.textContent = "Current Threshold: " + vThreshold) : "d" == a.cmd ? (vDuration = parseInt(a.value), txtDuration.textContent = "Current Duration: " + vDuration) : (console.log(a.cmd), console.log(a.value));
+                "m" == a.cmd ? 0 == a.value ? (txtSensorStatus.textContent = "感測器開關：關閉", sensorStatus = !1) : 1 == a.value && (txtSensorStatus.textContent = "感測器開關：開啟", sensorStatus = !0) : "c" == a.cmd ? txtCnt.textContent =
+                    "壓力閾值計數：" + a.value : "t" == a.cmd ? (vThreshold = parseInt(a.value), txtThreshold.textContent = "壓力閾值：" + vThreshold) : "d" == a.cmd ? (vDuration = parseInt(a.value), txtDuration.textContent = "感測間隔：" + vDuration) : (console.log(a.cmd), console.log(a.value));
                 return
             }
         d.addRows(dataBuf);

@@ -19,7 +19,8 @@
             <div class="top-pic" style="background-image:url('img/bg.jpg')">
                 <img src="img/logo.png" alt="" class="img-responsive logo">
                 <div class="container col-md-8 col-md-offset-2 top-center">
-                    <img src="img/circle.png" alt="" class="img-responsive top-circle">
+                    <!-- <img src="img/circle.png" alt="" class="img-responsive top-circle"> -->
+                    <img src="img/smartglove.gif" alt="" class="img-responsive top-circle">
                     <div class="top-text">農委會 - 機械搬運手臂</div>
                     <div class="top-btn"><a href="#go-content">Let’s Go</a></div>
                 </div>
@@ -29,46 +30,46 @@
     <div class="container">
         <div class="content row" id="go-content">
             <div class="col-xs-12">
-                <div id="txt_btconnect_status" class="green-text">Bluetooth Connect Status: Unconnect</div>
+                <div id="txt_btconnect_status" class="green-text">手套狀態：未連結</div>
             </div>
             <div class="col-xs-8">
                 <input type="text" id="input_btaddr_value" value="98:D3:32:20:EA:44" class="input-text">
             </div>
             <div class="col-xs-4">
-                <button type="button" id="btn_set_btaddr" class="input-btn">Connect</button>
+                <button type="button" id="btn_set_btaddr" class="input-btn">連結</button>
             </div>
             <div class="col-xs-8">
-                <div id="txt_sensor_status" class="input-text green-color">Sensor Status: Stop</div>
+                <div id="txt_sensor_status" class="input-text green-color">感測器開關：關閉</div>
             </div>
             <div class="col-xs-4">
-                <button type="button" id="btn_sensorstatus_switch" class="input-btn">Switch</button>
+                <button type="button" id="btn_sensorstatus_switch" class="input-btn">ON / OFF</button>
             </div>
             <div class="col-xs-12">
-                <div class="green-text">Threshold & Duration</div>
+                <div class="green-text">壓力閾值 ( T ) & 感測間隔 ( D )</div>
                 <input type="text" id="input_set_value" class="input-text-all">
             </div>
             <div class="col-xs-3" style="padding-right: 0px;">
-                <button type="button" id="btn_set_threshold" class="four-btn">Set T</button>
+                <button type="button" id="btn_set_threshold" class="four-btn">設定 T</button>
             </div>
             <div class="col-xs-3" style="padding-left: 7.5px; padding-right: 3.5px;">
-                <button type="button" id="btn_get_threshold" class="four-btn">Get T</button>
+                <button type="button" id="btn_get_threshold" class="four-btn">取得 T</button>
             </div>
             <div class="col-xs-3" style="padding-left: 3.5px; padding-right: 7.5px;">
-                <button type="button" id="btn_set_duration" class="four-btn">Set D</button>
+                <button type="button" id="btn_set_duration" class="four-btn">設定 D</button>
             </div>
             <div class="col-xs-3" style="padding-left: 0;">
-                <button type="button" id="btn_get_duration" class="four-btn">Get D</button>
+                <button type="button" id="btn_get_duration" class="four-btn">取得 D</button>
             </div>
             <div class="col-xs-12">
               <div class="input-text-all">
-                <div id="txt_threshold">Current Threshold: 0</div>
-                <div id="txt_cnt">Current Threshold Cnt: 0</div>
-                <div id="txt_duration">Current Duration: 0</div>
+                <div id="txt_threshold">壓力閾值：0</div>
+                <div id="txt_cnt">壓力閾值計數：0</div>
+                <div id="txt_duration">感測間隔：0</div>
               </div>
             </div>
             <div class="col-xs-12">
-                <div class="green-text">Chart</div>
-                <div class="input-text-all">
+                <div class="green-text">壓力圖表</div>
+                <div class="input-text-all" style="margin-bottom: 20px;">
                   <div id="chart_div"></div>
                 </div>
             </div>
