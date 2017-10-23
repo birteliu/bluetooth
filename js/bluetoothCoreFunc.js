@@ -23,12 +23,12 @@ function setBTConnectStatus() { txtBtconnectStatus.textContent = board.isConnect
 function StatusSwitch() { sensorStatus ? board._transport.send(toUTF8Array("1,0*")) : board._transport.send(toUTF8Array("1,1*")) }
 
 function getThreshold() { board._transport.send(toUTF8Array("2," + inputSetValue.value + "*"));
-    txtThreshold.textContent = "Current Threshold: " + vThreshold }
+    txtThreshold.textContent = "壓力閾值：" + vThreshold }
 
 function setThreshold() { 50 <= inputSetValue.value && 1023 >= inputSetValue.value ? board._transport.send(toUTF8Array("3," + inputSetValue.value + "*")) : "" != inputSetValue.value && (inputSetValue.value = "Error,the range [50 ~ 1023]") }
 
 function getDuration() { board._transport.send(toUTF8Array("4," + inputSetValue.value + "*"));
-    txtDuration.textContent = "Current Duration: " + vDuration }
+    txtDuration.textContent = "感測間隔：" + vDuration }
 
 function setDuration() { 50 <= inputSetValue.value && 1E3 >= inputSetValue.value ? board._transport.send(toUTF8Array("5," + inputSetValue.value + "*")) : "" != inputSetValue.value && (inputSetValue.value = "Error,the range [50 ~ 1000]") }
 
